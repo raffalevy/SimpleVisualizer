@@ -15,30 +15,54 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+/**
+ * A configurable grid/graph onto which lines and shapes can be drawn.
+ * @author raffa
+ */
 public class GridVisualization extends Visualization{
 	private Visualizer visualizer;
 	private JPanel panel;
+	
+	/**
+	 * Creates a new grid given your application's visualizer.
+	 * @param v
+	 */
 	public GridVisualization(Visualizer v) {
 		this.visualizer = v;
 		panel = new GridPanel();
 		panel.setPreferredSize(new Dimension(visualizer.getWindowWidth(),visualizer.getWindowHeight()));
 	}
 	
+	/**
+	 * Gets the visualizer.
+	 */
 	@Override
 	protected Visualizer getVisualizer() {
 		return visualizer;
 	}
 
+	/**
+	 * Gets the panel.
+	 */
 	@Override
 	public JPanel getPanel() {
 		return panel;
 	}
 	
-	private int scaleFactor = 1;
-	public void setScaleFactor(int sf) {
+	private double scaleFactor = 1;
+	/**
+	 * Sets how much to zoom into the grid.
+	 * @param sf
+	 */
+	public void setScaleFactor(double sf) {
 		scaleFactor=sf;
 	}
+	
 	private int unit = 10;
+	/**
+	 * sets how wide each grid square should be.
+	 * @param unit
+	 */
 	public void setUnit(int unit) {
 		this.unit = unit;
 	}
@@ -67,19 +91,31 @@ public class GridVisualization extends Visualization{
 			}
 		}
 	}
-	List<Rectangle> gridRectangles = new ArrayList<>();
-	List<Line2D> gridLines = new ArrayList<>();
+	private List<Rectangle> gridRectangles = new ArrayList<>();
+	private List<Line2D> gridLines = new ArrayList<>();
 	
+	/**
+	 * clears all shapes from the grid.
+	 */
 	public void clear() {
 		gridRectangles.clear();
 		gridLines.clear();
 		panel.repaint();
 	}
 	
+	/**
+	 * Add a rectangle to be painted to the grid. Uses grid units.
+	 * @param rect
+	 */
 	public void addGridRectangle(Rectangle rect) {
 		gridRectangles.add(rect);
 		panel.repaint();
 	}
+	
+	/**
+	 * Add a line to be painted to the grid. Uses grid units.
+	 * @param line
+	 */
 	public void addGridLine(Line2D line) {
 		gridLines.add(line);
 		panel.repaint();
