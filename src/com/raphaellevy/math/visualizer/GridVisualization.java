@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,12 +84,16 @@ public class GridVisualization extends Visualization{
 			t.scale(scaleFactor, scaleFactor);
 			g.transform(t);
 			
+			g.transform(tr);
+			
 			for (Rectangle r : gridRectangles) {
 				g.fill(AffineTransform.getScaleInstance(unit, unit).createTransformedShape(r));
 			}
 			for (Line2D l : gridLines) {
 				g.draw(AffineTransform.getScaleInstance(unit, unit).createTransformedShape(l));
 			}
+			
+			g.setTransform(save);
 		}
 	}
 	private List<Rectangle> gridRectangles = new ArrayList<>();
@@ -119,5 +124,21 @@ public class GridVisualization extends Visualization{
 	public void addGridLine(Line2D line) {
 		gridLines.add(line);
 		panel.repaint();
+	}
+	
+	private AffineTransform tr = new AffineTransform();
+	
+	/**
+	 * Centers the grid on the specified point.
+	 */
+	public void centerOnGridPoint(Point2D p) {
+		tr.translate(-p.getX()*10, -p.getY()*10);
+	}
+	
+	/**
+	 * Sets the grid to normal center.
+	 */
+	public void reCenter() {
+		tr = new AffineTransform();
 	}
 }
