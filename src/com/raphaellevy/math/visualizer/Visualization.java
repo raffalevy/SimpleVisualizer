@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * Copyright (c) 2017 Raffa Levy. All rights reserved.
+ *******************************************************************************/
 package com.raphaellevy.math.visualizer;
 
 import java.awt.Dimension;
